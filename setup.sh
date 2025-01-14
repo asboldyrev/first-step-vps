@@ -23,7 +23,7 @@ if id "$USERNAME" &>/dev/null; then
   echo "Пользователь $USERNAME уже существует."
 else
   useradd -m -s /bin/bash $USERNAME
-  echo "$USERNAME:$PASSWORD" | chpasswd
+  echo -e "$PASSWORD\n$PASSWORD" | passwd "$USERNAME"
   echo "Пользователь $USERNAME создан."
 fi
 
