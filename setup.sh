@@ -3,6 +3,7 @@
 # Скрипт для настройки SSH-доступа и создания пользователя
 
 # Проверка запуска от root
+echo "Проверка запуска от root"
 if [ "$EUID" -ne 0 ]; then
   echo "Пожалуйста, запустите скрипт от имени root."
   exit 1
@@ -12,6 +13,7 @@ fi
 USERNAME="aboldyrev"
 
 # Запрос пароля или автоматическая генерация
+echo "Запрос пароля или автоматическая генерация"
 read -p "Введите пароль для пользователя $USERNAME (оставьте пустым для автоматической генерации): " PASSWORD
 if [ -z "$PASSWORD" ]; then
   PASSWORD=$(openssl rand -base64 12 | tr -d '\n')  # Убираем возможные символы новой строки
@@ -19,6 +21,7 @@ if [ -z "$PASSWORD" ]; then
 fi
 
 # Создание пользователя
+echo "Создание пользователя"
 if id "$USERNAME" &>/dev/null; then
   echo "Пользователь $USERNAME уже существует."
 else
@@ -28,9 +31,11 @@ else
 fi
 
 # Добавление в группу sudo
+echo "Добавление в группу sudo"
 usermod -aG sudo $USERNAME
 
 # Отключение SSH-доступа для root
+echo "Отключение SSH-доступа для root"
 SSHD_CONFIG="/etc/ssh/sshd_config"
 if grep -q "^PermitRootLogin" $SSHD_CONFIG; then
   sed -i 's/^PermitRootLogin.*/PermitRootLogin no/' $SSHD_CONFIG
