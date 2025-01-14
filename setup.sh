@@ -16,6 +16,8 @@ read -p "Введите пароль для пользователя $USERNAME (
 if [ -z "$PASSWORD" ]; then
   PASSWORD=$(openssl rand -base64 12)
   echo "Сгенерированный пароль для $USERNAME: $PASSWORD"
+else
+  PASSWORD=$(printf "%q" "$PASSWORD")
 fi
 
 # Создание пользователя
@@ -49,3 +51,5 @@ cat << EOF
 - Пользователь добавлен в группу sudo.
 - Доступ root по SSH отключён.
 EOF
+
+exit 0
