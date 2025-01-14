@@ -12,13 +12,21 @@ fi
 # Переменные пользователя
 USERNAME="aboldyrev"
 
+# Запрос пароля или автоматическая генерация
+echo "Запрос пароля или автоматическая генерация"
+read -p "Введите пароль для пользователя $USERNAME (оставьте пустым для автоматической генерации): " PASSWORD
+if [ -z "$PASSWORD" ]; then
+  PASSWORD=$(openssl rand -base64 12 | tr -d '\n')  # Убираем возможные символы новой строки
+  # echo "Сгенерированный пароль для $USERNAME: $PASSWORD"
+fi
+
 # Создание пользователя
 echo "Создание пользователя"
 if id "$USERNAME" &>/dev/null; then
   echo "Пользователь $USERNAME уже существует."
 else
   useradd -m -s /bin/bash $USERNAME
-  passwd "$USERNAME"
+  echo -e "$PASSWORD\n$PASSWORD" | passwd "$USERNAME"
   echo "Пользователь $USERNAME создан."
 fi
 
