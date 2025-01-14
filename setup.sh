@@ -15,9 +15,6 @@ USERNAME="aboldyrev"
 read -p "Введите пароль для пользователя $USERNAME (оставьте пустым для автоматической генерации): " PASSWORD
 if [ -z "$PASSWORD" ]; then
   PASSWORD=$(openssl rand -base64 12)
-  # echo "Сгенерированный пароль для $USERNAME: $PASSWORD"
-else
-  PASSWORD=$(printf "%q" "$PASSWORD")
 fi
 
 # Создание пользователя
