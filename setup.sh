@@ -10,7 +10,7 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 apt update
-apt upgrade
+apt upgrade -y
 
 # Переменные пользователя
 USERNAME="aboldyrev"
