@@ -9,6 +9,9 @@ if [ "$EUID" -ne 0 ]; then
   exit 1
 fi
 
+apt update
+apt upgrade
+
 # Переменные пользователя
 USERNAME="aboldyrev"
 
